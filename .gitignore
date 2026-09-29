@@ -1,0 +1,27 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+RAG/
+runs/
+uploads/
+IMG_1445 (online-video-cutter.com).mp4
+shuttle.jpg
+torch_test.py
+yolo_torch_test.py
+app.db
+cat1.jpeg
+ex.txt
+requirements.txt
+
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
