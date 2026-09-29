@@ -16,9 +16,10 @@ shuttle.jpg
 torch_test.py
 yolo_torch_test.py
 app.db
+project.db
 cat1.jpeg
 ex.txt
-requirements.txt
+
 
 
 # Environment variables / secrets

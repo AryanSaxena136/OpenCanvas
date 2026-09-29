@@ -1,46 +1,22 @@
-import os
+from pathlib import Path
 
-from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
-load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-if not DATABASE_URL:
-    raise RuntimeError("DATABASE_URL is not set")
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATABASE_PATH = BASE_DIR / "project.db"
+DATABASE_URL = f"sqlite:///{DATABASE_PATH.as_posix()}"
 
 
 class Base(DeclarativeBase):
     pass
 
 
-# Use SQLite if MySQL is not available or if configured
-if DATABASE_URL.startswith("sqlite"):
-    engine = create_engine(
-        DATABASE_URL,
-        connect_args={"check_same_thread": False},
-        pool_pre_ping=True,
-    )
-else:
-    try:
-        engine = create_engine(
-            DATABASE_URL,
-            pool_pre_ping=True,
-        )
-        # Test connection
-        with engine.connect() as conn:
-            pass
-    except Exception:
-        # Fallback to SQLite if MySQL/External DB is down
-        sqlite_url = "sqlite:///./app.db"
-        engine = create_engine(
-            sqlite_url,
-            connect_args={"check_same_thread": False},
-            pool_pre_ping=True,
-        )
-
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False},
+)
 
 SessionLocal = sessionmaker(
     bind=engine,
